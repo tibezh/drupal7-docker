@@ -1,0 +1,40 @@
+version: '2'
+services:
+  web:
+    build: .
+    container_name: drupal-test
+    environment:
+      DRUPAL_VERSION: 7
+      SITE_NAME: NAME
+      SITE_DB: mysql
+      SITE_DB_URL: mysql
+      SITE_DB_PORT: 3306
+      SITE_DB_TABLE: drupal
+      DB_USER: drupal
+      DB_PASSWORD: drupal
+      SITE_ADMIN_PASS: drupal
+      USE_DB_DUMP: 'false'
+      DOCKER: 'true'
+    volumes:
+      - ./www/:/var/www/html
+      # - ./db-inport/:/db-inport
+      # - ./shared-folder/:/shared-folder
+      # - ./wait-for-it.sh:/scripts/wait-for-it.sh
+      # - ./config/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - "80:80"
+      # TODO: Need dynamic port
+      - "9090:9000"
+    links:
+      - mysql
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    container_name: mysql-test
+    environment:
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+      MYSQL_DATABASE: drupal
+      MYSQL_ROOT_PASSWORD: drupal

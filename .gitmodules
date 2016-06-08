@@ -1,0 +1,4 @@
+[submodule "www"]
+	path = www
+	url = https://git.drupal.org/project/drupal.git
+	branch = 7.x
